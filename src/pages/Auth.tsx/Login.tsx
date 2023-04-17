@@ -1,8 +1,56 @@
-import { Box, Flex, FormControl, FormLabel, Input, useColorModeValue, Checkbox, Link, Button, Text, Heading, HStack, Stack } from "@chakra-ui/react"
+import { useState } from "react"
+import { Box, Flex, FormControl, FormLabel, Input, useColorModeValue, Checkbox, Link, Button, Text, Heading, HStack, Stack, useToast } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword, sendPasswordResetEmail, auth } from "../../../services/firebase"
+import { customToast, ToastStatus } from "../../../utils/Toast";
+import { mapAuthCodeToMessage } from "../../../services/authHelper"
 
 const Login = () => {
   const navigate = useNavigate()
+
+  const toast = useToast()
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handlePasswordReset = () => {
+    if (email === "") {
+      customToast(toast, "Error sending password reset email", "Please enter your email", ToastStatus.error)
+      return
+    }
+    sendPasswordResetEmail(auth, email).then(() => {
+      customToast(toast, "Password reset email sent", "Check your email for a link to reset your password", ToastStatus.success)
+    })
+      .catch((error) => {
+        const errorCode = error.code
+
+        customToast(toast, "Error sending password reset email", mapAuthCodeToMessage(errorCode), ToastStatus.error)
+
+      })
+
+  }
+
+  const handleSignIn = () => {
+
+    if (email === "" || password === "") {
+      customToast(toast, "Error logging in", "Please fill out all fields", ToastStatus.error)
+      return
+
+    }
+
+    signInWithEmailAndPassword(auth, email, password).then(() => {
+      setEmail("")
+      setPassword("")
+
+      customToast(toast, "Logged in", "You are now logged in", ToastStatus.success)
+    }).catch((error) => {
+      console.log(error.code)
+      customToast(toast, "Error logging in", mapAuthCodeToMessage(error.code), ToastStatus.error)
+    })
+
+
+  }
+
 
   return (
     <Flex
@@ -31,20 +79,21 @@ const Login = () => {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input type="email" onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input type="password" onChange={(e) => setPassword(e.target.value)} />
             </FormControl>
             <Stack spacing={10}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
                 align={"center"}
                 justify={'space-evenly'}>
-                <Link color={'blue.400'}>Forgot password?</Link>
+                <Button onClick={handlePasswordReset} variant="link" color={'blue.400'}>Forgot password?</Button>
               </Stack>
               <Button
+                onClick={handleSignIn}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{
