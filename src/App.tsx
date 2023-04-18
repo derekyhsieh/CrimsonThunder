@@ -8,6 +8,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import Login from "./pages/Auth.tsx/Login"
 import Signup from "./pages/Auth.tsx/Signup"
 import Home from './pages/Home/Home';
+import Test from './pages/Test/Test';
 
 function App() {
   const user = useSelector(selectUser)
@@ -41,6 +42,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/create" element={<Signup />} />
+      <Route path="/test" element={<Test />} />
     </Routes>
   )
 }
