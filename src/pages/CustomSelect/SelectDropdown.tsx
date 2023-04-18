@@ -16,19 +16,21 @@ interface SelectDropdownProps {
 	label: string;
 	placeholder: string;
 	options: Array<any>;
+	value: any;
+	onChange: any;
 }
 
-export const SelectDropdown = ({ label, options, placeholder }: SelectDropdownProps) => {
-	const [colorMode, setColorMode] = useState<string | null | undefined>();
+export const SelectDropdown = ({ label, options, placeholder, value, onChange }: SelectDropdownProps) => {
+	
 
 	return (
 		<div style={{marginBottom: 5}}>
 			<FormLabel>{label}</FormLabel>
 			<CustomSelect
-				name="ColorMode"
+				name={label}
 				colorScheme="teal"
-				value={colorMode}
-				onChange={setColorMode}
+				value={value}
+				onChange={onChange}
 				placeholder={placeholder}
 			>
 				{options.map((optionValue, index) => (

@@ -33,6 +33,8 @@ const AddBabyModal = ({ isOpen, onOpen, onClose }: AddBabyModalProps) => {
 	// separate id's for firestore and for id's that neonatal care providers might want to import
 	const [firestoreBabyId, setFirestoreBabyId] = React.useState(uuidv4());
 	const [userCreatedBabyId, setUserCreatedBabyId] = React.useState(uuidv4());
+	const [gestationalAgeDays, setGestationalAgeDays] = React.useState<string | null | undefined>();
+	const [gestationalAgeWeeks, setGestationalAgeWeeks] = React.useState<string | null | undefined>();
 
 	return (
 		<Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
@@ -51,13 +53,17 @@ const AddBabyModal = ({ isOpen, onOpen, onClose }: AddBabyModalProps) => {
 						<SelectDropdown
 							label="Gestational Age (Weeks)"
 							options={[22, 23, 24, 25, 26, 27, 28, 29, 30]}
-							placeholder="22"
+							placeholder=""
+							value={gestationalAgeWeeks}
+							onChange={setGestationalAgeWeeks}
 						/>
 
 						<SelectDropdown
 							label="Gestational Age (Days)"
 							options={[0, 1, 2, 3, 4, 5, 6]}
-							placeholder="2"
+							placeholder=""
+							value={gestationalAgeDays}
+							onChange={setGestationalAgeDays}
 						/>
 					</FormControl>
 				</ModalBody>
