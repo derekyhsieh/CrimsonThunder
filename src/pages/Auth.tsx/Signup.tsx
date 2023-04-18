@@ -106,7 +106,7 @@ export default function Signup() {
           <Stack >
             <Text color="muted" fontSize={"lg"} align={'center'}>
               Already a user? {" "}
-              <Button fontSize={"lg"} onClick={() => navigate("/login")} variant="link" colorScheme="blue">
+              <Button fontSize={"lg"} onClick={() => navigate("/login")} variant="link" colorScheme={"teal"}>
                 Login
               </Button>
             </Text>
