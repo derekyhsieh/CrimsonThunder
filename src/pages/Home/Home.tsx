@@ -13,9 +13,13 @@ import { FiDownloadCloud } from 'react-icons/fi'
 import HomeContent from './Contents/HomeContent'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar/Sidebar'
+import { useDisclosure } from '@chakra-ui/react'
+import AddBabyModal from './AddBabyModal'
 
 export const Home = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
   return (
     <Flex
       as="section"
@@ -32,6 +36,7 @@ export const Home = () => {
           </Container>
         </Box>
       </Box>
+      <AddBabyModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </Flex>
   )
 }
