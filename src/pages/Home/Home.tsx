@@ -1,24 +1,58 @@
-import { Button, VStack, Text, Center } from '@chakra-ui/react'
-import { signOut, auth } from '../../../services/firebase'
-import { useSelector } from 'react-redux'
-import { selectUser } from '../../app/userSlice'
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Stack,
+  Text,
+  useBreakpointValue,
+} from '@chakra-ui/react'
+import { FiDownloadCloud } from 'react-icons/fi'
+import { Navbar } from './Navbar'
+import { Sidebar } from './Sidebar/Sidebar'
 
-const Home = () => {
-
-  const user = useSelector(selectUser)
-  const handleLogout = () => {
-
-    signOut(auth)
-
-  }
-
+export const Home = () => {
+  const isDesktop = useBreakpointValue({ base: false, lg: true })
   return (
-    <Center h="100vh">
-      <VStack>
-        <Text align={"center"}>{user?.displayName}</Text>
-        <Button onClick={handleLogout} colorScheme="red">Logout</Button>
-      </VStack>
-    </Center>
+    <Flex
+      as="section"
+      direction={{ base: 'column', lg: 'row' }}
+      height="100vh"
+      bg="bg-canvas"
+      overflowY="auto"
+    >
+      {isDesktop ? <Sidebar /> : <Navbar />}
+      <Box bg="bg-accent" pt={{ base: '0', lg: '3' }} flex="1">
+        <Box bg="bg-canvas" borderTopLeftRadius={{ base: 'none', lg: '2rem' }} height="full">
+          <Container py="8" height="full">
+            <Stack spacing={{ base: '8', lg: '6' }} height="full">
+              <Stack
+                spacing="4"
+                direction={{ base: 'column', lg: 'row' }}
+                justify="space-between"
+                align={{ base: 'start', lg: 'center' }}
+              >
+                <Stack spacing="1">
+                  <Heading size={{ base: 'xs', lg: 'sm' }} fontWeight="medium">
+                    Dashboard
+                  </Heading>
+                  <Text color="muted">All important metrics at a glance</Text>
+                </Stack>
+                <HStack spacing="3">
+                  <Button variant="secondary" leftIcon={<FiDownloadCloud fontSize="1.25rem" />}>
+                    Download
+                  </Button>
+                  <Button variant="primary">Create</Button>
+                </HStack>
+              </Stack>
+              <Box bg="bg-surface" borderRadius="lg" borderWidth="1px" height="full" />
+            </Stack>
+          </Container>
+        </Box>
+      </Box>
+    </Flex>
   )
 }
 
