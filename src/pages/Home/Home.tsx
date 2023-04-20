@@ -18,7 +18,7 @@ import AddBabyModal from './AddBabyModal'
 
 export const Home = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
-  const {isOpen, onOpen, onClose} = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex
@@ -36,7 +36,6 @@ export const Home = () => {
           </Container>
         </Box>
       </Box>
-      <AddBabyModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </Flex>
   )
 }
