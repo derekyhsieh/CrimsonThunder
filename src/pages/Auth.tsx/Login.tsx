@@ -65,7 +65,7 @@ const Login = () => {
             <Heading as="h1" size={{ base: 'md', md: 'lg' }}>Log in to your account</Heading>
             <HStack spacing="1" justify="center">
               <Text color="muted" fontSize={"lg"}>Don't have an account?</Text>
-              <Button fontSize="lg" onClick={() => navigate("/create")} variant="link" colorScheme="blue">
+              <Button fontSize="lg" onClick={() => navigate("/create")} variant="link" colorScheme="teal">
                 Sign up
               </Button>
             </HStack>
@@ -90,14 +90,14 @@ const Login = () => {
                 direction={{ base: 'column', sm: 'row' }}
                 align={"center"}
                 justify={'space-evenly'}>
-                <Button onClick={handlePasswordReset} variant="link" color={'blue.400'}>Forgot password?</Button>
+                <Button onClick={handlePasswordReset} variant="link" color={'teal.400'}>Forgot password?</Button>
               </Stack>
               <Button
                 onClick={handleSignIn}
-                bg={'blue.400'}
+                bg={'teal.400'}
                 color={'white'}
                 _hover={{
-                  bg: 'blue.500',
+                  bg: 'teal.500',
                 }}>
                 Sign in
               </Button>
