@@ -81,10 +81,10 @@ const HomeContent = () => {
         {
           currentBaby ? (
             <>
-              <StatCard source={table} title={"Table"} />
+              {/* <StatCard source={table} title={"Table"} /> */}
               <StatCard source={head} title={"Head Circumference"} />
-              <StatCard source={length} title={"Length"} />
-              <StatCard source={weight} title={"Weight"} />
+              {/* <StatCard source={length} title={"Length"} /> */}
+              {/* <StatCard source={weight} title={"Weight"} /> */}
             </>
           ) : (
             <BabyList />

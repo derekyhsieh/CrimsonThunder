@@ -1,6 +1,6 @@
 import { customToast, ToastStatus } from "../../../utils/Toast"
 import { mapAuthCodeToMessage } from "../../../services/authHelper"
-
+import { isValidPassword } from "../../../utils/passwordValidation"
 import {
   Flex,
   Box,
@@ -40,6 +40,7 @@ export default function Signup() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [reenterPassword, setReenterPassword] = useState("");
 
 
   const handleNewSignup = () => {
@@ -47,8 +48,14 @@ export default function Signup() {
     if (firstName === "" || lastName === "" || email === "" || password === "") {
       customToast(toast, "Error creating account", "Please fill out all fields", ToastStatus.error)
       return
+    } else if (password.localeCompare(reenterPassword) !== 0) {
+      customToast(toast, "Error creating account", "Please enter the same password in both fields", ToastStatus.error)
+      return
+    } else if (!isValidPassword(password)) {
+      customToast(toast, "Error creating account", "Please enter a strong password with a minimum of 8 characters, one uppercase letter, one lowercase letter, one digit and one special character.", ToastStatus.error)
+      return
     }
-
+    
     // ensure first name and last name have first capitalized
     const firstNameCapitalized = firstName.charAt(0).toUpperCase() + firstName.slice(1)
     const lastNameCapitalized = lastName.charAt(0).toUpperCase() + lastName.slice(1)
@@ -140,6 +147,21 @@ export default function Signup() {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} />
+                <InputRightElement h={'full'}>
+                  <Button
+                    variant={'ghost'}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }>
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl id="reenterPassword" isRequired>
+              <FormLabel>Re-enter Password</FormLabel>
+              <InputGroup>
+                <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setReenterPassword(e.target.value)} />
                 <InputRightElement h={'full'}>
                   <Button
                     variant={'ghost'}

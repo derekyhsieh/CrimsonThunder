@@ -1,9 +1,12 @@
 import { Box, Button, Image, Container, HStack, Icon, Square, Stack, Text } from '@chakra-ui/react'
 import { FiFileText } from 'react-icons/fi'
+import Plot from 'react-plotly.js';
+import {x_values} from "../../../../utils/x_values"
 
 export const StatCard = ({ source, title }: any) => (
+
   <Box as="section" py={{ base: '4', md: '8' }}>
-    <Container maxW="3xl">
+    <Container maxW={"100%"}>
       <Box bg="bg-surface" boxShadow="sm" borderRadius="lg" p={{ base: '4', md: '6' }}>
         <Stack spacing="5">
           <Stack spacing="1">
@@ -13,7 +16,68 @@ export const StatCard = ({ source, title }: any) => (
             <Text fontSize="sm" color="muted">
             </Text>
           </Stack>
-          <Image src={source} />
+
+          <Plot
+            data={[
+              {
+                x: x_values,
+                y: x_values,
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'solid' },
+                name: '97th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [3, 5, 2],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dash' },
+                name: '90th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [4, 3, 1],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dot' },
+                name: '75th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [4, 3, 1],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dot' },
+                name: '50th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [4, 3, 1],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dot' },
+                name: '25th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [4, 3, 1],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dot' },
+                name: '10th Percentile',
+              },
+              {
+                x: [1, 2, 3],
+                y: [4, 3, 1],
+                type: 'scatter',
+                mode: 'lines',
+                line: { dash: 'dot' },
+                name: '3rd Percentile',
+              },
+            ]}
+          />
+          {/* <Image src={source} /> */}
           {/* <Box borderWidth={{ base: '0', md: '1px' }} p={{ base: '0', md: '4' }} borderRadius="lg"> */}
           {/*   <Stack justify="space-between" direction={{ base: 'column', md: 'row' }} spacing="5"> */}
           {/*     <HStack spacing="3"> */}

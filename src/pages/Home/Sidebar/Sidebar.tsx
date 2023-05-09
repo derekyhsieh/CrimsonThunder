@@ -1,5 +1,9 @@
 import { CalendarIcon, Icon } from "@chakra-ui/icons";
 import { useEffect } from "react";
+import { signOut, auth } from "../../../../services/firebase"
+import { useDispatch } from "react-redux"
+import { logout } from "../../../app/userSlice"
+import { customToast, ToastStatus } from "../../../../utils/Toast"
 import {
   Box,
   Heading,
@@ -14,6 +18,7 @@ import {
   Progress,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import {
   FiBarChart2,
@@ -36,6 +41,8 @@ import { selectUser } from "../../../app/userSlice";
 export const Sidebar = () => {
   const currentTab = useSelector(selectSidebar);
   const user = useSelector(selectUser)
+  const dispatch = useDispatch();
+  const toast = useToast()
 
   useEffect(() => {
     console.log(currentTab)
@@ -87,6 +94,16 @@ export const Sidebar = () => {
           </Stack>
           <Stack spacing={{ base: "5", sm: "6" }}>
             <Divider borderColor="bg-accent-subtle" />
+            <Button
+              onClick={() => {
+                signOut(auth);
+                dispatch(logout());
+                customToast(toast, "Signed out", `You're successfully logged out!`, ToastStatus.success)
+              }}
+              colorScheme="red"
+            >
+              Log Out
+            </Button>
             <UserProfile name={user?.displayName} email={user?.email} />
           </Stack>
         </Stack>
