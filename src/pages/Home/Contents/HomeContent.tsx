@@ -8,10 +8,14 @@ import { CloseIcon } from '@chakra-ui/icons'
 import AddBabyModal from '../AddBabyModal'
 import { StatCard } from './Card'
 import { IconGenderFemale, IconGenderMale } from '@tabler/icons'
-import head from "./Head Circumference.png"
-import length from "./Head Circumference.png"
-import table from "./Table.png"
-import weight from "./Weight.png"
+
+import femaleLength from "../../../data/GA22wk/FemaleLength.json"
+import femaleWeight from "../../../data/GA22wk/FemaleWeight.json"
+import femaleHead from "../../../data/GA22wk/FemaleHC.json"
+
+import maleLength from "../../../data/GA22wk/MaleLength.json"
+import maleWeight from "../../../data/GA22wk/MaleWeight.json"
+import maleHead from "../../../data/GA22wk/MaleHC.json"
 
 const HomeContent = () => {
   const currentBaby = useSelector(selectCurrentBaby)
@@ -82,9 +86,9 @@ const HomeContent = () => {
           currentBaby ? (
             <>
               {/* <StatCard source={table} title={"Table"} /> */}
-              <StatCard source={head} title={"Head Circumference"} />
-              {/* <StatCard source={length} title={"Length"} /> */}
-              {/* <StatCard source={weight} title={"Weight"} /> */}
+              <StatCard source={currentBaby.sex === "male" ? maleLength : femaleLength} title={"Length"} />
+              <StatCard source={currentBaby.sex === "male" ? maleHead : femaleHead} title={"Head Circumference"} />
+              <StatCard source={currentBaby.sex === "male" ? maleWeight : femaleWeight} title={"Weight"} />
             </>
           ) : (
             <BabyList />

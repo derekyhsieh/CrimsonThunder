@@ -1,9 +1,53 @@
 import { Box, Button, Image, Container, HStack, Icon, Square, Stack, Text } from '@chakra-ui/react'
 import { FiFileText } from 'react-icons/fi'
 import Plot from 'react-plotly.js';
-import {x_values} from "../../../../utils/x_values"
+import { useEffect, useState } from 'react';
 
-export const StatCard = ({ source, title }: any) => (
+const createPercentileArray = (lengthData: any, percentileNumber: string) => {
+
+  return lengthData.map((length: any) => length[`percentile_${percentileNumber}_var`])
+
+}
+
+export const StatCard = ({ source, title }: any) => {
+
+  const [xValues, setxValues] = useState([])
+  const [percentile3, setPercentile3] = useState([])
+  const [percentile10, setPercentile10] = useState([])
+  const [percentile25, setPercentile25] = useState([])
+  const [percentile50, setPercentile50] = useState([])
+  const [percentile75, setPercentile75] = useState([])
+  const [percentile90, setPercentile90] = useState([])
+  const [percentile97, setPercentile97] = useState([])
+
+
+  const convertWkJson = () => {
+
+    const lengthData = JSON.parse(JSON.stringify(source))
+    const xValues = lengthData.map((length: any) => length.Day)
+
+
+
+    setxValues(xValues)
+    
+
+    setPercentile3(createPercentileArray(lengthData, "3"))
+    setPercentile10(createPercentileArray(lengthData, "10"))
+    setPercentile25(createPercentileArray(lengthData, "25"))
+    setPercentile50(createPercentileArray(lengthData, "50"))
+    setPercentile75(createPercentileArray(lengthData, "75"))
+    setPercentile90(createPercentileArray(lengthData, "90"))
+    setPercentile97(createPercentileArray(lengthData, "97"))
+
+  }
+
+  useEffect(() => {
+
+    convertWkJson()
+
+  }, [])
+  
+  return (
 
   <Box as="section" py={{ base: '4', md: '8' }}>
     <Container maxW={"100%"}>
@@ -20,56 +64,57 @@ export const StatCard = ({ source, title }: any) => (
           <Plot
             data={[
               {
-                x: x_values,
-                y: x_values,
+                x: xValues,
+                y: percentile97,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'solid' },
                 name: '97th Percentile',
-              },
+              }
+              ,
               {
-                x: [1, 2, 3],
-                y: [3, 5, 2],
+                x: xValues,
+                y: percentile90,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dash' },
                 name: '90th Percentile',
               },
               {
-                x: [1, 2, 3],
-                y: [4, 3, 1],
+                x: xValues,
+                y: percentile75,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dot' },
                 name: '75th Percentile',
               },
               {
-                x: [1, 2, 3],
-                y: [4, 3, 1],
+                x: xValues,
+                y: percentile50,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dot' },
                 name: '50th Percentile',
               },
               {
-                x: [1, 2, 3],
-                y: [4, 3, 1],
+                x: xValues,
+                y: percentile25,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dot' },
                 name: '25th Percentile',
               },
               {
-                x: [1, 2, 3],
-                y: [4, 3, 1],
+                x: xValues,
+                y: percentile10,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dot' },
                 name: '10th Percentile',
               },
               {
-                x: [1, 2, 3],
-                y: [4, 3, 1],
+                x: xValues,
+                y: percentile3,
                 type: 'scatter',
                 mode: 'lines',
                 line: { dash: 'dot' },
@@ -101,4 +146,5 @@ export const StatCard = ({ source, title }: any) => (
       </Box>
     </Container>
   </Box>
-)
+  )
+}
